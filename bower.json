@@ -1,0 +1,16 @@
+{
+  "name": "angular-elasticsearch-mdl",
+  "version": "0.0.1",
+  "authors": [
+    "swfz <sawafuji.09@gmail.com>"
+  ],
+  "description": "angular elasticsearch mdl",
+  "main": "index.html",
+  "license": "MIT",
+  "dependencies": {
+    "elasticsearch": "~8.2.0",
+    "angular-route": "~1.4.6",
+    "material-design-lite": "~1.0.4",
+    "material-design-icons": "~2.0.0"
+  }
+}
