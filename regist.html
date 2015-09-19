@@ -1,19 +1,43 @@
 
-<br>
-<br>
-<br>
-<br>
-<form class="form-horizontal" name="addUrl" novalidate>
-  <!-- <h1>Regist URL</h1> -->
-  <select name="type">
-    <option value="kibana">kibana</option>
-  <select>
-  <input type="url" name="url" ng-model="url" ng-required="true" />
-  <input type="text" name="path" ng-model="path" ng-required="true" />
+<form class="form-horizontal" name="urlForm" novalidate>
+  <h3>Regist URL</h3>
+
+  <span ng-repeat="type in types">
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ $index }}">
+      <input type="radio" id="option-{{ $index }}" class="mdl-radio__button" name="tpye" value="{{ type.value }}" required ng-required="true"/>
+      <span class="mdl-radio__label">{{ type.value }}</span>
+    </label>
+  </span>
+  <br>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="url" name="url" ng-model="url" ng-required="true" id="url"/>
+    <label class="mdl-textfield__label" for="url">URL</label>
+  </div>
+  <br>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" name="urlName" ng-model="urlName" ng-required="true" id="urlName"/>
+    <label class="mdl-textfield__label" for="urlName">URL Name</label>
+  </div>
+
+  <br>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" name="path" ng-model="path" ng-required="true" id="path"/>
+    <label class="mdl-textfield__label" for="path">Path</label>
+  </div>
+  <br>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <textarea class="mdl-textfield__input" type="text" rows="3" name="description" ng-model="description" ng-required="true" id="description"/></textarea>
+    <label class="mdl-textfield__label" for="description">Description</label>
+    <span ng-message="required" class="mdl-textfield__error">Required</span>
+  </div>
+  <br>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-disabled="urlForm.$invalid" ng-click="registUrl()">Submit</button>
+
 </form>
 
-aa
-bb
 
 
 

@@ -1,4 +1,4 @@
-var App = angular.module('App', ['ngRoute']);
+var App = angular.module('App', ['ngRoute','elasticsearch']);
 
 App.config(function($routeProvider){
     $routeProvider.
@@ -11,15 +11,20 @@ App.config(function($routeProvider){
     when('/search/production', {
         templateUrl: 'log/search.html',
     }).
+    when('/url', {
+        controller: 'Urls',
+        // controller: 'getUrlsCtrl',
+        templateUrl: 'urls.html',
+    }).
     when('/url/regist', {
         // controller: 'getGraphs',
-        controller: 'App',
+        controller: 'Regist',
         templateUrl: 'regist.html',
     }).
     when('/graph', {
-        controller: 'getGraphs',
+        controller: 'Urls',
         // controller: 'getUrlsCtrl',
-        templateUrl: 'graphs.html',
+        templateUrl: 'urls.html',
     }).
     when('/graph/:name', {
         controller: 'getGraph',
@@ -29,3 +34,23 @@ App.config(function($routeProvider){
         redirectTo: '/'
     });
 });
+
+App.service('client', function(esFactory){
+  return esFactory({
+    host: '192.168.70.15:9200',
+    apiVersion: '2.0',
+    log: 'trace'
+  });
+});
+
+App.controller('Regist',function($scope, client, esFactory){
+  $scope.types=('kibana cloudwatch').split(' ').map(function(state){ return { value: state }});
+
+  $scope.registUrl = function(){
+    console.log($scope);
+  }
+});
+
+
+
+
