@@ -4,8 +4,8 @@
 
   <span ng-repeat="type in types">
     <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ $index }}">
-      <input type="radio" id="option-{{ $index }}" class="mdl-radio__button" name="tpye" value="{{ type.value }}" required ng-required="true"/>
-      <span class="mdl-radio__label">{{ type.value }}</span>
+      <input type="radio" id="option-{{ $index }}" class="mdl-radio__button" name="type" value="{{ type }}" ng-value="type" ng-model="checked.type" required ng-required="true"/>
+      <span class="mdl-radio__label">{{ type }}</span>
     </label>
   </span>
   <br>

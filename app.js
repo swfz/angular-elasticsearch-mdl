@@ -1,6 +1,6 @@
 var App = angular.module('App', ['ngRoute','elasticsearch']);
 
-App.config(function($routeProvider){
+App.config(function($routeProvider,$httpProvider){
     $routeProvider.
     when('/', {
         templateUrl: 'top.html',
@@ -33,6 +33,7 @@ App.config(function($routeProvider){
     otherwise({
         redirectTo: '/'
     });
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;application/json;charset=utf-8';
 });
 
 App.service('client', function(esFactory){
@@ -44,10 +45,36 @@ App.service('client', function(esFactory){
 });
 
 App.controller('Regist',function($scope, client, esFactory){
-  $scope.types=('kibana cloudwatch').split(' ').map(function(state){ return { value: state }});
+  // $scope.types=('kibana cloudwatch').split(' ').map(function(state){ return { value: state }});
+  $scope.types = ['kibana', 'cloudwatch'];
+  $scope.checked = { type: 'kibana' };
 
   $scope.registUrl = function(){
-    console.log($scope);
+    console.log($scope.checked.type);
+    console.log($scope.path);
+    client.create({
+      index: 'graphs',
+      type: $scope.checked.type,
+      // id: '1',
+      body: {
+        url: $scope.url,
+        path: $scope.path,
+        description: $scope.description,
+        name: $scope.name
+      }
+    }, function(error,response){
+      if ( error ) {
+        console.log(error);
+        console.log(response);
+        console.log('error');
+      }
+      else {
+        console.log(error);
+        console.log(response);
+        console.log('success');
+      }
+
+    });
   }
 });
 
