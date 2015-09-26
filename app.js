@@ -13,18 +13,11 @@ App.config(function($routeProvider,$httpProvider){
     }).
     when('/url', {
         controller: 'Urls',
-        // controller: 'getUrlsCtrl',
         templateUrl: 'urls.html',
     }).
     when('/url/regist', {
-        // controller: 'getGraphs',
         controller: 'Regist',
         templateUrl: 'regist.html',
-    }).
-    when('/graph', {
-        controller: 'Urls',
-        // controller: 'getUrlsCtrl',
-        templateUrl: 'urls.html',
     }).
     when('/graph/:name', {
         controller: 'getGraph',
@@ -78,6 +71,36 @@ App.controller('Regist',function($scope, client, esFactory){
   }
 });
 
+App.controller('Urls', function($scope,$location,client,esFactory){
+  client.search({
+    index: 'graphs'
+  },function(error,response){
+    $scope.urls = response.hits.hits;
+  });
+
+  $scope.deleteUrl = function(){
+    var deleteUrls = $scope.urls.filter(function(url){
+      return url.wantDelete;
+    });
+
+    var requestBody = [];
+    deleteUrls.forEach(function(url){
+      var requestData = { delete: { _index: 'graphs', _type: url._type, _id: url._id } };
+      requestBody.push( requestData );
+    });
+
+    client.bulk({
+      body: requestBody
+    }, function(error,response){
+      if ( error ) {
+        alert('Delete Error!!!!');
+      }
+      else{
+        $location.path('/');
+      }
+    });
+  }
+});
 
 
 

@@ -1,6 +1,6 @@
 
 <form class="form-horizontal" name="urlForm" novalidate>
-  <h3>Regist URL</h3>
+  <h3><i class="material-icons">note_add</i>Regist URL</h3>
 
   <span ng-repeat="type in types">
     <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ $index }}">
@@ -17,8 +17,8 @@
   <br>
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" name="urlName" ng-model="urlName" ng-required="true" id="urlName"/>
-    <label class="mdl-textfield__label" for="urlName">URL Name</label>
+    <input class="mdl-textfield__input" type="text" name="name" ng-model="name" ng-required="true" id="name"/>
+    <label class="mdl-textfield__label" for="name">URL Name</label>
   </div>
 
   <br>
@@ -34,8 +34,10 @@
     <span ng-message="required" class="mdl-textfield__error">Required</span>
   </div>
   <br>
-  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-disabled="urlForm.$invalid" ng-click="registUrl()">Submit</button>
-
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-disabled="urlForm.$invalid" ng-click="registUrl()">
+    <i class="material-icons">add</i>
+    Submit
+  </button>
 </form>
 
 

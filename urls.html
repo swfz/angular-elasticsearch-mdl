@@ -1,0 +1,37 @@
+<form class="form-horizontal" name="urlsForm" novalidate>
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">name</th>
+        <th class="mdl-data-table__cell--non-numeric">type</th>
+        <th class="mdl-data-table__cell--non-numeric">path</th>
+        <th class="mdl-data-table__cell--non-numeric">description</th>
+        <th class="mdl-data-table__cell--non-numeric">url</th>
+        <th class="mdl-data-table__cell--non-numeric"><i class="material-icons">check_box</i>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="url in urls">
+        <td class="mdl-data-table__cell--non-numeric">{{ url._source.name }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ url._type }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ url._source.path }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ url._source.description }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ url._source.url }}</td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-{{ url._id }}">
+            <input type="checkbox" id="checkbox-{{ url._id }}" class="mdl-checkbox__input" ng-model="url.wantDelete" />
+            <span class="mdl-checkbox__label">Delete</span>
+          </label>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <td class="mdl-data-table__cell--non-numeric" colspan="6">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-click="deleteUrl()">
+          <i class="material-icons">clear</i>
+          Delete
+        </button>
+      </td>
+    </tfoot>
+  </table>
+</form>
