@@ -8,48 +8,46 @@
 
   <body ng-app="App">
 
-<!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">SampleApp</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link Regist" href="#/url/regist">Regist</a>
-        <a class="mdl-navigation__link" href="#/url">Urls</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-          <i class="material-icons">add</i>
-        </button>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">SampleApp</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="#/">Top</a>
+            <a class="mdl-navigation__link" href="#/url/regist">Regist</a>
+            <a class="mdl-navigation__link" href="#/url">Urls</a>
+          </nav>
+        </div>
+      </header>
+      <nav class="mdl-layout__drawer mdl-navigation mdl-color--blue mdl-color-text--white" ng-controller="sideNavi">
+        <span class="mdl-layout-title">Graphs</span>
+
+        <span><i class="material-icons">equalizer</i>Kibana</span>
+        <ul class="mdl-js-ripple-effect" ng-repeat="url in kibana">
+          <li>
+            <a class="mdl-navigation__link mdl-color-text--white" href="#/graph/{{ url._id }}">{{ url._source.name }}</a>
+          </li>
+        </ul>
+
+        <span><i class="material-icons">equalizer</i>cloudwatch</span>
+        <ul class="mdl-js-ripple-effect" ng-repeat="url in cloudwatch">
+          <li>
+            <a class="mdl-navigation__link mdl-color-text--white" href="{{ url._source.url }}" target="_blank">{{ url._source.name }}</a>
+          </li>
+        </ul>
       </nav>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer" ng-controller="sideNavi">
-    <span class="mdl-layout-title">Graphs</span>
-    <span><i class="material-icons">equalizer</i>Kibana</span>
-    <ul class="mdl-js-ripple-effect" ng-repeat="url in kibana">
-      <li>
-        <a class="mdl-navigation__link" href="#/graph/{{ url._id }}">{{ url._source.name }}</a>
-      </li>
-    </ul>
 
-    <span><i class="material-icons">equalizer</i>cloudwatch</span>
-    <ul class="mdl-js-ripple-effect" ng-repeat="url in cloudwatch">
-      <li>
-        <a class="mdl-navigation__link" href="{{ url._source.path }}">{{ url._source.name }}</a>
-      </li>
-    </ul>
-  </div>
-
-  <main class="mdl-layout__content">
-    <div class="mdl-cell mdl-cell--4-col">
-      <div ng-view></div>
+      <main class="mdl-layout__content">
+        <div class="mdl-cell mdl-cell--4-col">
+          <div ng-view></div>
+        </div>
+      </main>
     </div>
-  </main>
-</div>
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
