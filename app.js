@@ -1,15 +1,9 @@
 var App = angular.module('App', ['ngRoute','elasticsearch']);
 
-App.config(function($routeProvider,$httpProvider){
+App.config(function($routeProvider,$httpProvider,$sceProvider){
     $routeProvider.
     when('/', {
         templateUrl: 'top.html',
-    }).
-    when('/search/sandbox', {
-        templateUrl: 'log/search.html',
-    }).
-    when('/search/production', {
-        templateUrl: 'log/search.html',
     }).
     when('/url', {
         controller: 'Urls',
@@ -21,12 +15,13 @@ App.config(function($routeProvider,$httpProvider){
     }).
     when('/graph/:name', {
         controller: 'getGraph',
-        templateUrl: 'frame.html',
+        templateUrl: 'graph.html',
     }).
     otherwise({
         redirectTo: '/'
     });
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;application/json;charset=utf-8';
+    $sceProvider.enabled(false);
 });
 
 App.service('client', function(esFactory){
@@ -38,17 +33,13 @@ App.service('client', function(esFactory){
 });
 
 App.controller('Regist',function($scope, client, esFactory){
-  // $scope.types=('kibana cloudwatch').split(' ').map(function(state){ return { value: state }});
   $scope.types = ['kibana', 'cloudwatch'];
   $scope.checked = { type: 'kibana' };
 
   $scope.registUrl = function(){
-    console.log($scope.checked.type);
-    console.log($scope.path);
     client.create({
       index: 'graphs',
       type: $scope.checked.type,
-      // id: '1',
       body: {
         url: $scope.url,
         path: $scope.path,
@@ -57,13 +48,9 @@ App.controller('Regist',function($scope, client, esFactory){
       }
     }, function(error,response){
       if ( error ) {
-        console.log(error);
-        console.log(response);
         console.log('error');
       }
       else {
-        console.log(error);
-        console.log(response);
         console.log('success');
       }
 
@@ -79,6 +66,9 @@ App.controller('Urls', function($scope,$location,client,esFactory){
   });
 
   $scope.deleteUrl = function(){
+    if ( !window.confirm('Really Delete?') ){
+      return;
+    }
     var deleteUrls = $scope.urls.filter(function(url){
       return url.wantDelete;
     });
@@ -102,5 +92,36 @@ App.controller('Urls', function($scope,$location,client,esFactory){
   }
 });
 
+App.controller('sideNavi', function($scope,client,esFactory){
+  client.search({
+    index: 'graphs',
+  },function(error,response){
+    var urls = response.hits.hits;
 
+    $scope.kibana = urls.filter(function(url){
+      return url._type == 'kibana';
+    });
+
+    $scope.cloudwatch = urls.filter(function(url){
+      return url._type == 'cloudwatch';
+    });
+  });
+});
+
+
+App.controller('getGraph', function($scope,$location,client,esFactory){
+  var id = $location.$$path.match(/\/graph\/(.*)/)[1];
+
+  client.get({
+    index: 'graphs',
+    type: 'kibana',
+    id: id
+  }, function(error,response){
+    if ( error ) {
+      console.log('get Error!!');
+      return;
+    }
+    $scope.item = response._source;
+  });
+});
 

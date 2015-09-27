@@ -13,7 +13,7 @@
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title">Title</span>
+      <span class="mdl-layout-title">SampleApp</span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation. We hide it in small screens. -->
@@ -27,15 +27,23 @@
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">SiteNav</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-    </nav>
+  <div class="mdl-layout__drawer" ng-controller="sideNavi">
+    <span class="mdl-layout-title">Graphs</span>
+    <span><i class="material-icons">equalizer</i>Kibana</span>
+    <ul class="mdl-js-ripple-effect" ng-repeat="url in kibana">
+      <li>
+        <a class="mdl-navigation__link" href="#/graph/{{ url._id }}">{{ url._source.name }}</a>
+      </li>
+    </ul>
+
+    <span><i class="material-icons">equalizer</i>cloudwatch</span>
+    <ul class="mdl-js-ripple-effect" ng-repeat="url in cloudwatch">
+      <li>
+        <a class="mdl-navigation__link" href="{{ url._source.path }}">{{ url._source.name }}</a>
+      </li>
+    </ul>
   </div>
+
   <main class="mdl-layout__content">
     <div class="mdl-cell mdl-cell--4-col">
       <div ng-view></div>
